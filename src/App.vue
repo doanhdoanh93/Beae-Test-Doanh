@@ -21,7 +21,6 @@
                             class="elcss p-3"
                             draggable="true"
                             @dragstart="checkTitle(el)"
-                            :id="el.id"
                         >
                             <div>
                                 {{ el.label }}
@@ -31,7 +30,7 @@
                 </div>
             </div>
 
-            <div id="main" class="flex-grow p-2 bg-white" @dragover="allowDrop">
+            <div id="main" class="flex-grow p-2 bg-white" @dragover="allowDrop" @drop="drop">
                 <div class="h-full w-full flex items-center" v-show="!isElement">
                     <div
                         class="border border-dashed border-6 text-center w-full h-60 flex items-center justify-center"
@@ -71,7 +70,10 @@ export default {
         elementFeatured
     },
     data() {
-        return {};
+        return {
+            draging: false,
+            datadrag: null
+        };
     },
     computed: {
         ...mapGetters(['getAllElement', 'isElement'])
@@ -81,22 +83,14 @@ export default {
         ...mapActions([]),
         checkTitle(el, ev) {
             console.log('ev: ', ev, el);
-            // ev.dataTransfer.setData('text', ev.target);
-            this.$store.dispatch('checkElements', el);
-        },
-        onDragging(ev) {
-            console.log(ev);
-            ev.dataTransfer.setData('text', ev.target.id);
-            //this.$store.commit('module/namespace', status);
+            this.datadrag = el;
         },
         allowDrop(ev) {
             ev.preventDefault();
         },
         drop(ev) {
+            this.$store.dispatch('checkElements', this.datadrag);
             ev.preventDefault();
-            // let data = ev.dataTransfer.getData('text');
-            // console.log(data);
-            // ev.target.appendChild(document.getElementById(data));
         }
     }
 };
