@@ -1,31 +1,64 @@
 <template>
-    <div v-if="getSelectEl">
-        <!-- <button @click="check()">fgfhgo;johkl</button> -->
+    <div v-if="element">
+       <!-- <button @click="check()"> check data </button> -->
         <component
-            v-if="getSelectEl"
-            :is="getSelectEl.settings?.tag"
-            :style="getSelectEl.styles"
+            v-if="element"
+            :is="setCss.tag"
+            :style="setCss.styles"
             class="border border-indigo-600 ml-5 mr-5 mt-5 text-left"
-            :class="getSelectEl.class"
-            >{{ getSelectEl.settings.content }}
+            >{{ setCss.content }}
         </component>
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 export default {
+    props: {
+        element: {
+            type: Object,
+            default: () => {}
+        }
+    },
     data() {
-        return {
-        };
+        return {};
     },
     mounted() {},
     computed: {
-        ...mapGetters(['getSelected','getSelectEl']),
+        setCss() {
+            const element=this.element
+            const styles = this.element.styles;
+            // console.log('fontStyle: ', styles);
+            let css = [];
+            if (styles) {
+                switch (styles.frontStyle) {
+                    case 'italic':
+                        css.push('font-style: italic');
+                        break;
+                    case 'bold':
+                        css.push('font-weight: bold');
+                        break;
+                    case 'line-through':
+                        css.push('text-decoration: line-through');
+                        break;
+                    default:
+                        css.push('font-style: normal');
+                }
+            }
+            if (styles.align){css.push(`text-align: ${styles.align}`);}
+            if (styles.color){css.push(`color: ${styles.color}`);}
+            console.log('object',css);
+            let font = css.join(';');
+            return {
+                tag: element.settings?.tag ? element.settings.tag : 'p',
+                link:element.settings?.link ? element.settings.link : null,
+                content: element.settings?.content ? element.settings.content : element.desc,
+                styles: font
+                }
+        }
     },
-    methods:{
-        check(){
-            console.log("check",this.getSelectEl);
+    methods: {
+        check() {
+            console.log('check', this.setCss, this.element);
         }
     }
 };

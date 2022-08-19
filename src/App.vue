@@ -15,13 +15,10 @@
 
         <div class="flex-grow flex gap-3">
             <div id="left" ref="left" class="flex-shrink-0 w-1/6 pl-3">
-                <div class="grid grid-cols-3 gap-3 mt-1 pl-5 pr-5">
-                    <div v-for="(el, i) in getAllElement" :key="i">
-                        <div
-                            class="elcss p-3"
-                            draggable="true"
-                            @dragstart="checkTitle(el)"
-                        >
+                <div class="grid grid-cols-3 gap-3 mt-1">
+                    <div v-for="(el, i) in elements" :key="i">
+                        <div class="elcss p-3" draggable="true" @dragstart="checkTitle(el)">
+                            <component :is="el.icon" :class="`w-8 h-8 mx-auto`"></component>
                             <div>
                                 {{ el.label }}
                             </div>
@@ -33,22 +30,25 @@
             <div id="main" class="flex-grow p-2 bg-white" @dragover="allowDrop" @drop="drop">
                 <div class="h-full w-full flex items-center" v-show="!isElement">
                     <div
-                        class="border border-dashed border-6 text-center w-full h-60 flex items-center justify-center"
+                        class="border-dashed border-8 border-amber-200 text-center w-full h-60 flex items-center justify-center"
                     >
                         {{ 'DRAG ELEMENT HERE' }}
                     </div>
                 </div>
-                <!-- <component></component> -->
-                <elementHeading v-show="isElement == 'Heading'" />
-                <elementFeatured v-show="isElement == 'Featured'" />
+                <div v-if="builders.length>0">
+                    <div v-for="(element,id) in builders" :key="id">
+                        <component :is="element.component" :element="element"></component>
+                    </div>
+                </div>
             </div>
 
             <div id="right" class="flex-shrink-0 w-1/6 p-2 bg-white text-left" ref="right">
                 <div v-show="!isElement" class="pt-20 text-center">
                     {{ 'Click vào elemnt để edit' }}
                 </div>
-                <settingHeading v-show="isElement == 'Heading'" />
-                <settingFeatured v-show="isElement == 'Featured'" />
+                <div v-if="datadrag">
+                    <component :is="datadrag.component_setting" :element="datadrag"></component>
+                </div>
             </div>
         </div>
     </div>
@@ -56,33 +56,51 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import elements from "./functionData/elements";
+import {
+    AcademicCapIcon,
+    BadgeCheckIcon,
+    AnnotationIcon,
+    ViewBoardsIcon,
+    ViewGridAddIcon
+} from '@heroicons/vue/outline';
 import draggable from 'vuedraggable';
 import elementHeading from './components/heading/elementHeading.vue';
 import settingHeading from './components/heading/settingHeading.vue';
 import elementFeatured from './components/featured/elementFeatured.vue';
 import settingFeatured from './components/featured/settingFeatured.vue';
+import elementTestimonial from './components/testimonial/elementTestimonial.vue';
+import settingTestimonial from './components/testimonial/settingTestimonial.vue';
 export default {
     components: {
+        AcademicCapIcon,
+        BadgeCheckIcon,
+        AnnotationIcon,
+        ViewBoardsIcon,
+        ViewGridAddIcon,
         draggable,
         elementHeading,
         settingHeading,
         settingFeatured,
-        elementFeatured
+        elementFeatured,
+        elementTestimonial,
+        settingTestimonial
     },
     data() {
         return {
+            elements:elements,
             draging: false,
             datadrag: null
         };
     },
     computed: {
-        ...mapGetters(['getAllElement', 'isElement'])
+        ...mapGetters(['getAllElement', 'isElement', 'getSelected','builders'])
     },
     mounted() {},
     methods: {
-        ...mapActions([]),
+        ...mapActions(['add']),
         checkTitle(el, ev) {
-            console.log('ev: ', ev, el);
+            // console.log('ev: ', ev, el);
             this.datadrag = el;
         },
         allowDrop(ev) {
@@ -90,6 +108,9 @@ export default {
         },
         drop(ev) {
             this.$store.dispatch('checkElements', this.datadrag);
+             this.$store.dispatch('add', this.datadrag);
+            console.log('this.datadrag: ', this.datadrag);
+            // console.log('this.getSelected: ', this.getSelected);
             ev.preventDefault();
         }
     }
