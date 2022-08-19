@@ -1,23 +1,29 @@
 <template>
-    <div v-if="getSelectEl">
-    <!-- <button @click=check()>sdjf.gmf/g;,</button> -->
-        <div class="flex justify-between tab-header text-center mb-3">
+    <div v-if="getSelected">
+        <!-- <button @click=check()>sdjf.gmf/g;,</button> -->
+        <div class="flex justify-between text-center mb-3">
             <div
                 class="w-full tab-item p-1 cursor-pointer"
-                v-for="t in tabs"
-                :key="t.id"
-                @click="activeTab = t.id"
+                @click="activeTab = 'content'"
+                :class="activeTab == 'content' ? 'bg-indigo-200 hover:bg-indigo-500' : ''"
             >
-                {{ t.label }}
+                <PencilIcon class="h-5 w-5 inline-block" /> Content
+            </div>
+            <div
+                class="w-full p-1 cursor-pointer"
+                @click="activeTab = 'design'"
+                :class="activeTab == 'design' ? 'bg-indigo-200 hover:bg-indigo-500' : ''"
+            >
+                <SunIcon class="h-5 w-5 inline-block" /> Design
             </div>
         </div>
-        <div class="tab-content">
+        <div>
             <div v-if="activeTab == 'content'">
                 <div class="mb-3">
                     <label for="content">{{ 'Layout' }}</label>
                     <select
                         class="block w-full border border-gray-500 rounded-md p-2"
-                        v-model="getSelecteds.settings.position"
+                        v-model="getSelected.settings.position"
                     >
                         <option value="flex">Layout 1</option>
                         <option value="block">Layout 2</option>
@@ -25,16 +31,19 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="link">{{ 'Image' }}</label>
+                    <div class="w-full p-1 cursor-pointer">
+                        <PhotographIcon class="h-5 w-5 inline-block" /> Images
+                    </div>
+                    <!-- <label for="link">{{ 'Image' }}</label> -->
                     <div class="grid grid-cols-2 gap-2">
                         <div
                             v-for="(img, i) in images"
                             :key="i"
                             :class="
-                                getSelecteds.settings.image === img ? 'border-4 border-red-400' : ''
+                                getSelected.settings.image === img ? 'border-4 border-red-400' : ''
                             "
                         >
-                            <img :src="img" alt="" @click="getSelecteds.settings.image = img" />
+                            <img :src="img" alt="" @click="getSelected.settings.image = img" />
                         </div>
                     </div>
                 </div>
@@ -42,7 +51,7 @@
                 <div class="mb-3">
                     <label for="tag">{{ 'Title' }}</label>
                     <input
-                        v-model="getSelecteds.settings.title"
+                        v-model="getSelected.settings.title"
                         class="block w-full border border-gray-500 rounded-md p-2"
                     />
                 </div>
@@ -50,7 +59,7 @@
                 <div class="mb-3">
                     <label for="tag">{{ 'Content' }}</label>
                     <textarea
-                        v-model="getSelecteds.settings.content"
+                        v-model="getSelected.settings.content"
                         class="block w-full border border-gray-500 rounded-md p-2"
                     >
                     </textarea>
@@ -59,7 +68,7 @@
                 <div class="mb-3">
                     <label for="tag">{{ 'Btn text' }}</label>
                     <input
-                        v-model="getSelecteds.settings.btnText"
+                        v-model="getSelected.settings.btnText"
                         class="block w-full border border-gray-500 rounded-md p-2"
                     />
                 </div>
@@ -67,7 +76,7 @@
                 <div class="mb-3">
                     <label for="tag">{{ 'Btn Link' }}</label>
                     <input
-                        v-model="getSelecteds.settings.link"
+                        v-model="getSelected.settings.link"
                         class="block w-full border border-gray-500 rounded-md p-2"
                     />
                 </div>
@@ -77,7 +86,7 @@
                     <label for="align">{{ 'Alignment' }}</label>
                     <select
                         class="block w-full border border-gray-500 rounded-md p-2"
-                        v-model="getSelecteds.styles.align"
+                        v-model="getSelected.styles.align"
                     >
                         <option v-for="align in getAlignments" :value="align.id" :key="align.id">
                             {{ align.label }}
@@ -87,7 +96,7 @@
 
                 <div class="mb-3 flex">
                     <color-picker
-                        v-model:pureColor="getSelecteds.styles.background"
+                        v-model:pureColor="getSelected.styles.background"
                         useType="pure"
                         disableHistory
                         shape="circle"
@@ -100,7 +109,7 @@
                     <label for="color">{{ 'Box Shadow' }}</label>
                     <br />
                     <select
-                        v-model="getSelecteds.styles.boxShadow"
+                        v-model="getSelected.styles.boxShadow"
                         class="block w-full border border-gray-500 rounded-md p-2"
                     >
                         <option value="shadow-sm">Small</option>
@@ -115,7 +124,7 @@
                         <select
                             style="width: 55px"
                             class="block border border-gray-500 rounded-md p-1"
-                            v-model="getSelecteds.styles.border_width"
+                            v-model="getSelected.styles.border_width"
                         >
                             <option value="">None</option>
                             <option v-for="index in 5" :value="`${index}px`" :key="index">
@@ -125,7 +134,7 @@
 
                         <select
                             class="block border border-gray-500 rounded-md p-1 flex-grow"
-                            v-model="getSelecteds.styles.border_style"
+                            v-model="getSelected.styles.border_style"
                         >
                             <option value="solid">Solid</option>
                             <option value="dashed">Dashed</option>
@@ -133,7 +142,7 @@
                         </select>
 
                         <color-picker
-                            v-model:pureColor="getSelecteds.styles.border_color"
+                            v-model:pureColor="getSelected.styles.border_color"
                             useType="pure"
                             disableHistory
                             shape="circle"
@@ -143,7 +152,7 @@
                         <select
                             style="width: 55px"
                             class="block border border-gray-500 rounded-md p-1"
-                            v-model="getSelecteds.styles.border_radius"
+                            v-model="getSelected.styles.border_radius"
                         >
                             <option value="0">None</option>
                             <option v-for="radius in borderRadius" :key="radius" :value="radius">
@@ -159,46 +168,29 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
+import { alignments, borderRadius, positions,images } from '../../functionData/data';
+import { PencilIcon, SunIcon, PhotographIcon } from '@heroicons/vue/solid';
 export default {
+    components: { PencilIcon, SunIcon, PhotographIcon },
     data() {
         return {
+            getAlignments: alignments,
+            positions: positions,
+            borderRadius: borderRadius,
             activeTab: 'content',
-            // getSelecteds: {},
-            tabs: [
-                { id: 'content', label: 'Content' },
-                { id: 'design', label: 'Design' }
-            ],
             content: {},
             design: {},
-            images: [
-                'https://cdn.pixabay.com/photo/2017/09/23/04/02/dice-2777809_960_720.jpg',
-                'https://cdn.pixabay.com/photo/2016/07/07/16/46/dice-1502706_960_720.jpg',
-                'https://cdn.pixabay.com/photo/2014/10/14/20/24/soccer-488700_960_720.jpg',
-                'https://cdn.pixabay.com/photo/2016/03/27/20/57/people-1284253_960_720.jpg'
-            ]
+            images: images
         };
     },
     mounted() {},
     methods: {
-        check(){
-             console.log('this.getSelecteds: ', this.getSelecteds);
+        check() {
+            console.log('this.getSelected: ', this.getSelected);
         }
     },
     computed: {
-        ...mapGetters([
-            'getAllElement',
-            'isElement',
-            'getSelectEl',
-            'getSelected',
-            'getAlignments',
-            'borderRadius',
-            'positions'
-        ]),
-        getSelecteds() {
-            return this.getSelectEl;
-        },
-       
+        ...mapGetters(['getSelected'])
     },
     watch: {}
 };

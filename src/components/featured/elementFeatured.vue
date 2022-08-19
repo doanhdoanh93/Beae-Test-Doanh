@@ -1,5 +1,5 @@
 <template>
-    <div v-if="getSelectEl" :style="cssBorder">
+    <div v-if="element" :style="setCSS">
         <!-- <button @click="check()">sdjffgklg</button> -->
         <div
             class="overflow-hidden"
@@ -13,10 +13,6 @@
                     alt=""
                     :style="`width: 100%; min-height: 300px; background-color: ${element.styles.background}`"
                 />
-                <!-- <div
-                    v-else
-                    :style="`width: 100%; max-height: 100px; background-color: ${element.styles.background}`"
-                ></div> -->
             </div>
             <div class="left ml-3" :class="element.styles.align">
                 <div class="font-bold">
@@ -42,20 +38,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex';
 export default {
-    data() {
-        return {};
+     props: {
+        element: {
+            type: Object,
+            default: () => {}
+        }
     },
     mounted() {},
     computed: {
-        ...mapGetters(['getSelectEl']),
-        element() {
-            return this.getSelectEl;
-        },
-        cssBorder() {
+        setCSS() {
             const styles = this.element?.styles;
-
             const styleBorder = [];
             if (styles.border_width) {
                 styleBorder.push(`border: ${styles.border_width} solid`);
