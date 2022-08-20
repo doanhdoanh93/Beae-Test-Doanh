@@ -1,6 +1,6 @@
 <template>
     <div class="elementTestimonial" v-if="element">
-     <button @click="check()"> check data </button> 
+     <!-- <button @click="check()"> check data </button>  -->
         <div class="grid grid-cols-3 gap-8" :style="setCss.aligmentsss">
             <div v-for="(item, i) in items" :key="i" :style="setCss.cssBorder">
                 <component :is="element.styles.content_tag || 'div'" class="mb-3" :style="setCss.styles">

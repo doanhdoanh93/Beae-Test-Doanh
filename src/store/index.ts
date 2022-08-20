@@ -35,14 +35,18 @@ export default createStore({
             state.builders.push(item)
             console.log('state.builders: ', state.builders);
         },
-        removeSelected: (state) => (state.selected = null)
+        deleteEL: (state, item) =>
+        (state.builders = state.builders.filter((el) => el !== item)),
+        openSetting: (state, item) => {
+            state.selected = item;
+          },
     },
 
     actions: {
         add: ({ commit }, item) => commit("add", item),
-        removeSelected: ({ commit }) => commit('removeSelected'),
+        openSetting: ({ commit }, item) => commit("openSetting", item),
+        deleteEL: ({ commit }, item) => commit("deleteEL", item),
         checkElements: ({ commit }, el) => {
-            // console.log('el: ', el);
             commit('checkElement', el);
         },
     }

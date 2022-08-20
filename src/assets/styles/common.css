@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.elcss {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    background-color: #fff;
+}
+
+.buil-el {
+  border: 1px dashed transparent;
+  position: relative;
+}
+
+.buil-el:hover {
+    border: 1px dashed transparent;
+    border-color: rgb(147 197 253);
+}
+
+.buil-el:hover .buil-el-delete {
+  display: flex;
+}
+
+.buil-el.active {
+    border-style: solid;
+    border-color: rgb(147 197 253);
+}
+
+.buil-el-delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: red;
+  opacity: 0.8;
+  color: white;
+  font-weight: bold;
+  border-radius: 2px;
+  cursor: pointer;
+  z-index: 2
+}
+
+.buil-el-delete:hover {
+  opacity: 1;
+}

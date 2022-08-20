@@ -5,7 +5,7 @@
             v-if="element"
             :is="setCss.tag"
             :style="setCss.styles"
-            class="border border-indigo-600 ml-5 mr-5 mt-5 text-left"
+            class="ml-5 mr-5 text-left text-inherit"
             >{{ setCss.content }}
         </component>
     </div>

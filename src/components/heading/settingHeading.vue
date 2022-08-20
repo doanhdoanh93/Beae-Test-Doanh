@@ -33,7 +33,7 @@
                         name=""
                         id=""
                         v-model="getSelected.settings.content"
-                        class="w-full caret-blue-500 mb-2 rounded ..."
+                        class="w-full caret-blue-500 mb-2 rounded select-all ..."
                     ></textarea>
                 </div>
                 <div class="mb-3">
@@ -64,7 +64,7 @@
                         <PencilIcon  class="h-5 w-5 inline-block" /> 
                     </div> -->
                     <div>
-                        <select name="tag" class="rounded ..." v-model="getSelected.settings.tag">
+                        <select name="tag" class="rounded appearance-none ..." v-model="getSelected.settings.tag">
                             <option v-for="(tag, i) in titleTag" :key="i" :value="tag.tag">
                                 {{ tag.tag }}
                             </option>
