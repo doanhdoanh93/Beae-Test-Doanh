@@ -41,4 +41,5 @@ const titleTag=[
     { tag: 'Span' }
 ]
 const clone = (item) => JSON.parse(JSON.stringify(item));
+const uuid = () => (Math.random() + 1).toString(36).substring(7);
 export { avatars,images, alignments,positions,borderRadius ,titleTag, clone, floats};

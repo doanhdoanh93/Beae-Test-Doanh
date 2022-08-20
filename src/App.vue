@@ -30,24 +30,35 @@
             <div id="main" class="flex-grow p-2 bg-white" @dragover="allowDrop" @drop="drop">
                 <div class="h-full w-full flex items-center" v-show="!isElement">
                     <div
-                        class="border-dashed border-8 border-amber-200 text-center w-full h-60 flex items-center justify-center"
+                        class="border-dashed border-8 border-blue-300 text-center w-full h-60 flex items-center justify-center"
                     >
-                        {{ 'DRAG ELEMENT HERE' }}
+                        <p class="text-2xl">DRAG ELEMENT HERE</p>
                     </div>
                 </div>
-                <div v-if="builders.length>0">
-                    <div v-for="(element,id) in builders" :key="id">
-                        <component :is="element.component" :element="element"></component>
+                <div v-if="builders.length > 0">
+                    <div v-for="(element, id) in builders" :key="id">
+                        <div :class="`buil-el ${element.id === getSelected.id ? 'active' : ''}`">
+                            <div
+                                class="buil-el-delete"
+                                @click="deleteElement(element)"
+                                title="delete"
+                            >
+                                x
+                            </div>
+                            <component
+                                :is="element.component"
+                                :element="element"
+                                @click="openSetting(element)"
+                            ></component>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div id="right" class="flex-shrink-0 w-1/6 p-2 bg-white text-left" ref="right">
-                <div v-show="!isElement" class="pt-20 text-center">
-                    {{ 'Click vào elemnt để edit' }}
-                </div>
-                <div v-if="datadrag">
-                    <component :is="datadrag.component_setting" :element="datadrag"></component>
+                <div v-show="!isElement" class="pt-20 text-center">Click vào elemnt để edit</div>
+                <div v-if="getSelected">
+                    <component :is="getSelected.component_setting"></component>
                 </div>
             </div>
         </div>
@@ -56,7 +67,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import elements from "./functionData/elements";
+import elements from './functionData/elements';
 import {
     AcademicCapIcon,
     BadgeCheckIcon,
@@ -88,13 +99,13 @@ export default {
     },
     data() {
         return {
-            elements:elements,
+            elements: elements,
             draging: false,
             datadrag: null
         };
     },
     computed: {
-        ...mapGetters(['getAllElement', 'isElement', 'getSelected','builders'])
+        ...mapGetters(['getAllElement', 'isElement', 'getSelected', 'builders'])
     },
     mounted() {},
     methods: {
@@ -108,19 +119,21 @@ export default {
         },
         drop(ev) {
             this.$store.dispatch('checkElements', this.datadrag);
-             this.$store.dispatch('add', this.datadrag);
-            console.log('this.datadrag: ', this.datadrag);
-            // console.log('this.getSelected: ', this.getSelected);
+            this.$store.dispatch('add', this.datadrag);
+            // console.log('this.datadrag: ', this.datadrag);
+            console.log('this.getSelected: ', this.getSelected);
             ev.preventDefault();
+        },
+        openSetting(el) {
+            this.$store.dispatch('openSetting', el);
+        },
+        deleteElement(el) {
+            let choice = confirm('Are you sure delete?');
+            if (choice) {
+                this.$store.dispatch('deleteEL', el);
+            }
         }
     }
 };
 </script>
-<style>
-.elcss {
-    width: 100%;
-    height: 80px;
-    padding: 10px;
-    background-color: #fff;
-}
-</style>
+<style lang="css" src="./assets/styles/common.css"></style>

@@ -8,7 +8,7 @@ const  elements= [
         icon: 'AcademicCapIcon',
         settings: {
             content: 'Enter your heading text',
-            tag: 'p'
+            tag: 'H1'
         },
         styles: {
             frontStyle: 'normal',
