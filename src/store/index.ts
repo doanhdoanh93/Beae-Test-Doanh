@@ -17,12 +17,12 @@ export default createStore({
     state: {
         builders: [],
         selected: null,
-        isElement: null,
+        isElement: null
     },
     getters: {
         builders: (state) => state.builders,
         getSelected: (state) => state.selected,
-        isElement: (state) => state.isElement,
+        isElement: (state) => state.isElement
     },
 
     mutations: {
@@ -32,22 +32,21 @@ export default createStore({
             // console.log('state.selected: ', state.selected);
         },
         add: (state, item) => {
-            state.builders.push(item)
+            state.builders.push(item);
             console.log('state.builders: ', state.builders);
         },
-        deleteEL: (state, item) =>
-        (state.builders = state.builders.filter((el) => el !== item)),
+        deleteEL: (state, item) => (state.builders = state.builders.filter((el) => el !== item)),
         openSetting: (state, item) => {
             state.selected = item;
-          },
+        }
     },
 
     actions: {
-        add: ({ commit }, item) => commit("add", item),
-        openSetting: ({ commit }, item) => commit("openSetting", item),
-        deleteEL: ({ commit }, item) => commit("deleteEL", item),
+        add: ({ commit }, item) => commit('add', item),
+        openSetting: ({ commit }, item) => commit('openSetting', item),
+        deleteEL: ({ commit }, item) => commit('deleteEL', item),
         checkElements: ({ commit }, el) => {
             commit('checkElement', el);
-        },
+        }
     }
 });

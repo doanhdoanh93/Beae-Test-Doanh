@@ -1,12 +1,16 @@
 <template>
     <div v-if="element">
-       <!-- <button @click="check()"> check data </button> -->
+        <!-- <button @click="check()"> check data </button> -->
         <component
             v-if="element"
             :is="setCss.tag"
             :style="setCss.styles"
-            class="ml-5 mr-5 text-left text-inherit"
-            >{{ setCss.content }}
+            class="pl-5 pr-5 pt-2 pb-2 text-left mb-3"
+        >
+            <div v-if="!setCss.link">{{ setCss.content }}</div>
+            <div v-else>
+                <a :href="setCss.link" target="_blank">{{ setCss.content }} </a>
+            </div>
         </component>
     </div>
 </template>
@@ -19,13 +23,9 @@ export default {
             default: () => {}
         }
     },
-    data() {
-        return {};
-    },
-    mounted() {},
     computed: {
         setCss() {
-            const element=this.element
+            const element = this.element;
             const styles = this.element.styles;
             // console.log('fontStyle: ', styles);
             let css = [];
@@ -44,16 +44,40 @@ export default {
                         css.push('font-style: normal');
                 }
             }
-            if (styles.align){css.push(`text-align: ${styles.align}`);}
-            if (styles.color){css.push(`color: ${styles.color}`);}
-            console.log('object',css);
+            if (styles.align) {
+                css.push(`text-align: ${styles.align}`);
+            }
+            if (styles.color) {
+                css.push(`color: ${styles.color}`);
+            }
+            if (styles.typography) {
+                if (styles.typography.font_size) {
+                    css.push(`font-size: ${styles.typography.font_size}`);
+                }
+                if (styles.typography.font_weight) {
+                    css.push(`font-weight: ${styles.typography.font_weight}`);
+                }
+                if (styles.typography.letter_spacing) {
+                    css.push(`letter-spacing: ${styles.typography.letter_spacing}`);
+                }
+                if (styles.typography.line_height) {
+                    css.push(`line-height: ${styles.typography.line_height}`);
+                }
+                if (styles.typography.text_decoration) {
+                    css.push(`text-decoration: ${styles.typography.text_decoration}`);
+                }
+                if (styles.typography.text_transform) {
+                    css.push(`text-transform: ${styles.typography.text_transform}`);
+                }
+            }
+            // console.log('object', css);
             let font = css.join(';');
             return {
-                tag: element.settings?.tag ? element.settings.tag : 'p',
-                link:element.settings?.link ? element.settings.link : null,
+                tag: element.settings?.tag ? element.settings.tag : 'h1',
+                link: element.settings?.link ? element.settings.link : null,
                 content: element.settings?.content ? element.settings.content : element.desc,
                 styles: font
-                }
+            };
         }
     },
     methods: {
@@ -63,32 +87,3 @@ export default {
     }
 };
 </script>
-<style>
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-size: initial;
-    font-weight: bold !important;
-}
-h1 {
-    font-size: 2em !important;
-}
-h2 {
-    font-size: 1.5em !important;
-}
-h3 {
-    font-size: 1.17em !important;
-}
-h4 {
-    font-size: 1em !important;
-}
-h5 {
-    font-size: 0.83em !important;
-}
-h6 {
-    font-size: 0.67em !important;
-}
-</style>

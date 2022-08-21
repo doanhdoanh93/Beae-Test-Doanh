@@ -8,6 +8,7 @@
             </div>
             <button
                 class="bg-green-700 pr-2 pl-2 mr-3 mt-3 mb-3 rounded text-white border border-green-600 ..."
+                @click="exportJSON()"
             >
                 Import/Export JSON
             </button>
@@ -27,8 +28,8 @@
                 </div>
             </div>
 
-            <div id="main" class="flex-grow p-2 bg-white" @dragover="allowDrop" @drop="drop">
-                <div class="h-full w-full flex items-center" v-show="!isElement">
+            <div id="main" class="flex-grow p-5 bg-white" @dragover="allowDrop" @drop="drop">
+                <div class="h-full w-full flex pt-10 pl-10 pr-10" v-show="!isElement">
                     <div
                         class="border-dashed border-8 border-blue-300 text-center w-full h-60 flex items-center justify-center"
                     >
@@ -121,7 +122,7 @@ export default {
             this.$store.dispatch('checkElements', this.datadrag);
             this.$store.dispatch('add', this.datadrag);
             // console.log('this.datadrag: ', this.datadrag);
-            console.log('this.getSelected: ', this.getSelected);
+            // console.log('this.getSelected: ', this.getSelected);
             ev.preventDefault();
         },
         openSetting(el) {
@@ -132,6 +133,9 @@ export default {
             if (choice) {
                 this.$store.dispatch('deleteEL', el);
             }
+        },
+        exportJSON() {
+            console.log('this.builders: ', this.builders);
         }
     }
 };

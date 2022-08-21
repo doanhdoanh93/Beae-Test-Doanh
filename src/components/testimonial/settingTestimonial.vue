@@ -28,7 +28,7 @@
                     <ChevronDownIcon class="h-5 w-5 inline-block" /> Testimonial
                 </div>
                 <div class="w-full p-1 cursor-pointer">Testimonials Items</div>
-                <!-- <draggable tag="ul" :list="getSelected.items" class="list-group" handle=".handle" item-key="name"> -->
+                <!-- <draggable tag="ul" :list="getSelected.items" class="list-group" handle=".handle" item-key="name">
                     <div v-for="(element, i) in getSelected.items" :key="i">
                         <div class="border p-2 rounded-md shadow-sm mb-2">
                             <div class="flex list-user">
@@ -114,8 +114,98 @@
                             </div>
                         </div>
                     </div>
-                <!-- </draggable> -->
-                
+                </draggable> -->
+                <draggable
+                    tag="ul"
+                    :list="getSelected.items"
+                    class="list-group"
+                    handle=".handle"
+                    item-key="id"
+                >
+                    <template #item="{ element }">
+                        <div class="border p-2 rounded-md shadow-sm mb-2">
+                            <div class="flex list-user">
+                                <div class="font-bold flex-grow" @click="toggleCollapse(element)">
+                                    <ChevronRightIcon class="h-5 w-5 inline-block" />
+                                    {{ element.title }}
+                                </div>
+                                <div class="flex list-user-actions">
+                                    <DuplicateIcon
+                                        title="Clones"
+                                        class="w-6 h-6 p-1 text-gray-400 hover:text-gray-600"
+                                        @click="clonesItem(element)"
+                                    />
+                                    <TrashIcon
+                                        title="Delete"
+                                        class="w-6 h-6 p-1 text-gray-400 hover:text-gray-600"
+                                        @click="deleteItem(element)"
+                                    />
+                                    <MenuAlt4Icon
+                                        title="transitions"
+                                        class="handle w-6 h-6 p-1 text-gray-400 hover:text-gray-600"
+                                    />
+                                </div>
+                            </div>
+                            <div v-show="element.id === collapse" class="transition-all">
+                                <div class="mb-2">
+                                    <label for="avatar" class="text-sm">Avatar</label>
+                                    <div class="grid grid-cols-4 gap-2">
+                                        <div
+                                            v-for="(img, i) in avatars"
+                                            :key="i"
+                                            :class="
+                                                element.avatar === img
+                                                    ? 'border-4 border-red-400'
+                                                    : ''
+                                            "
+                                        >
+                                            <img :src="img" alt="" @click="element.avatar = img" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="title" class="text-sm">Name</label>
+                                    <input
+                                        type="text"
+                                        class="block w-full border border-gray-500 rounded-md p-2"
+                                        v-model="element.title"
+                                    />
+                                </div>
+                                <div class="mb-2">
+                                    <label for="position" class="text-sm">Position</label>
+                                    <input
+                                        type="text"
+                                        class="block w-full border border-gray-500 rounded-md p-2"
+                                        v-model="element.position"
+                                    />
+                                </div>
+                                <div class="mb-2">
+                                    <div class="w-full p-1 cursor-pointer">
+                                        <TranslateIcon class="h-5 w-5 inline-block" /> Font style
+                                    </div>
+                                    <select
+                                        class="block w-full border border-gray-500 rounded-md p-2"
+                                        v-model="getSelected.styles.frontStyle"
+                                    >
+                                        <option value="normal">Normal</option>
+                                        <option value="italic">Italic</option>
+                                        <option value="bold">Bold</option>
+                                        <option value="line-through">Line through</option>
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="content" class="text-sm">Text</label>
+                                    <textarea
+                                        type="text"
+                                        class="block w-full border border-gray-500 rounded-md p-2"
+                                        rows="5"
+                                        v-model="element.content"
+                                    ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </draggable>
                 <div class="text-blue-500 font-bold cursor-pointer" @click="addItem">
                     + Add item
                 </div>
@@ -248,7 +338,6 @@ export default {
             collapse: null
         };
     },
-    watch: {},
     computed: {
         ...mapGetters(['getSelected'])
     },
