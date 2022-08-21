@@ -168,7 +168,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { alignments, borderRadius, positions,images } from '../../functionData/data';
+import { alignments, borderRadius, positions, images } from '../../functionData/data';
 import { PencilIcon, SunIcon, PhotographIcon } from '@heroicons/vue/solid';
 export default {
     components: { PencilIcon, SunIcon, PhotographIcon },
@@ -183,7 +183,6 @@ export default {
             images: images
         };
     },
-    mounted() {},
     methods: {
         check() {
             console.log('this.getSelected: ', this.getSelected);
@@ -191,7 +190,6 @@ export default {
     },
     computed: {
         ...mapGetters(['getSelected'])
-    },
-    watch: {}
+    }
 };
 </script>

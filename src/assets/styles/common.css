@@ -9,9 +9,40 @@
     background-color: #fff;
 }
 
+h1 {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+}
+h2 {
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+h3 {
+    display: block;
+    font-size: 1.17em;
+    font-weight: bold;
+}
+h4 {
+    display: block;
+    font-size: 1em;
+    font-weight: bold;
+}
+h5 {
+    display: block;
+    font-size: 0.83em;
+    font-weight: bold;
+}
+h6 {
+    display: block;
+    font-size: 0.67em;
+    font-weight: bold;
+}
+
 .buil-el {
-  border: 1px dashed transparent;
-  position: relative;
+    border: 1px dashed transparent;
+    position: relative;
 }
 
 .buil-el:hover {
@@ -20,7 +51,7 @@
 }
 
 .buil-el:hover .buil-el-delete {
-  display: flex;
+    display: flex;
 }
 
 .buil-el.active {
@@ -29,23 +60,23 @@
 }
 
 .buil-el-delete {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 18px;
-  height: 18px;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background: red;
-  opacity: 0.8;
-  color: white;
-  font-weight: bold;
-  border-radius: 2px;
-  cursor: pointer;
-  z-index: 2
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 18px;
+    height: 18px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: red;
+    opacity: 0.8;
+    color: white;
+    font-weight: bold;
+    border-radius: 2px;
+    cursor: pointer;
+    z-index: 2;
 }
 
 .buil-el-delete:hover {
-  opacity: 1;
+    opacity: 1;
 }

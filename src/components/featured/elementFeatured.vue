@@ -1,5 +1,5 @@
 <template>
-    <div v-if="element" :style="setCSS">
+    <div v-if="element" :style="setCSS" class="pr-5 pl-5 pt-2 pb-2 mb-3" :class="element.styles.boxShadow">
         <!-- <button @click="check()">sdjffgklg</button> -->
         <div
             class="overflow-hidden"
@@ -38,15 +38,14 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex'; 
 export default {
-     props: {
+    props: {
         element: {
             type: Object,
             default: () => {}
         }
     },
-    mounted() {},
     computed: {
         setCSS() {
             const styles = this.element?.styles;

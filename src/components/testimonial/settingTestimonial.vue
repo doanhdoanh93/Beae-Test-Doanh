@@ -28,8 +28,15 @@
                     <ChevronDownIcon class="h-5 w-5 inline-block" /> Testimonial
                 </div>
                 <div class="w-full p-1 cursor-pointer">Testimonials Items</div>
-                <!-- <draggable tag="ul" :list="getSelected.items" class="list-group" handle=".handle" item-key="name"> -->
-                    <div v-for="(element, i) in getSelected.items" :key="i">
+
+                <draggable
+                    tag="ul"
+                    :list="getSelected.items"
+                    class="list-group"
+                    handle=".handle"
+                    item-key="id"
+                >
+                    <template #item="{ element }">
                         <div class="border p-2 rounded-md shadow-sm mb-2">
                             <div class="flex list-user">
                                 <div class="font-bold flex-grow" @click="toggleCollapse(element)">
@@ -50,7 +57,6 @@
                                     <MenuAlt4Icon
                                         title="transitions"
                                         class="handle w-6 h-6 p-1 text-gray-400 hover:text-gray-600"
-                                        draggable="true"
                                     />
                                 </div>
                             </div>
@@ -79,7 +85,6 @@
                                         v-model="element.title"
                                     />
                                 </div>
-
                                 <div class="mb-2">
                                     <label for="position" class="text-sm">Position</label>
                                     <input
@@ -113,9 +118,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <!-- </draggable> -->
-                
+                    </template>
+                </draggable>
                 <div class="text-blue-500 font-bold cursor-pointer" @click="addItem">
                     + Add item
                 </div>
@@ -248,7 +252,6 @@ export default {
             collapse: null
         };
     },
-    watch: {},
     computed: {
         ...mapGetters(['getSelected'])
     },

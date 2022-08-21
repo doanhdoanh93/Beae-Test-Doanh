@@ -1,13 +1,13 @@
 <template>
-    <div class="elementTestimonial" v-if="element">
-     <!-- <button @click="check()"> check data </button>  -->
+    <div class="elementTestimonial pl-5 p-5 pt-2 pb-2 mb-3" v-if="element">
+        <!-- <button @click="check()"> check data </button>  -->
         <div class="grid grid-cols-3 gap-8" :style="setCss.aligmentsss">
             <div v-for="(item, i) in items" :key="i" :style="setCss.cssBorder">
-                <component :is="element.styles.content_tag || 'div'" class="mb-3" :style="setCss.styles">
+                <div class="mb-3" :style="setCss.styles">
                     {{ item.content }}
-                </component>
+                </div>
 
-                <div class="flex" >
+                <div class="flex">
                     <div class="flex-shrink-0">
                         <div class="rounded-full h-14 w-14 border overflow-hidden">
                             <img v-if="item.avatar" :src="item.avatar" :alt="item.title" />
@@ -15,9 +15,9 @@
                         </div>
                     </div>
                     <div class="flex-grow ml-3 text-left">
-                        <component :is="element.styles.title_tag || 'div'" :style="setCss.colorTitle">
+                        <div :style="setCss.colorTitle">
                             {{ item.title }}
-                        </component>
+                        </div>
                         <div>{{ item.position }}</div>
                     </div>
                 </div>
@@ -36,24 +36,20 @@ export default {
             default: () => {}
         }
     },
-    data() {
-        return {};
-    },
-    mounted() {},
 
     computed: {
         ...mapGetters(['getSelected']),
         items() {
             return this.element.items;
         },
-         setCss() {
-            const element=this.element
+        setCss() {
+            const element = this.element;
             const styles = this.element.styles;
             // console.log('fontStyle: ', styles);
-           
-            let css = []; 
-            let cssTitle=[]
-            let cssAvatar=[]
+
+            let css = [];
+            let cssTitle = [];
+            let cssAvatar = [];
             if (styles) {
                 switch (styles.frontStyle) {
                     case 'italic':
@@ -69,10 +65,14 @@ export default {
                         css.push('font-style: normal');
                 }
             }
-            if (styles.align){cssAvatar.push(`text-align: ${styles.align}`);}
-            if (styles.color){cssTitle.push(`color: ${styles.color}`);}
+            if (styles.align) {
+                cssAvatar.push(`text-align: ${styles.align}`);
+            }
+            if (styles.color) {
+                cssTitle.push(`color: ${styles.color}`);
+            }
             // console.log('object',css);
-             const styleBorder = [];
+            const styleBorder = [];
             if (styles.border_width) {
                 styleBorder.push(`border: ${styles.border_width} solid`);
                 styles.border_style && styleBorder.push(`border-style: ${styles.border_style}`);
@@ -81,21 +81,21 @@ export default {
             styles.border_radius && styleBorder.push(`border-radius: ${styles.border_radius}`);
             let cssBorder = styleBorder.join(';');
             let font = css.join(';');
-              let fontTitle = cssTitle.join(';');
-              let aligmentsss=cssAvatar.join(';');
+            let fontTitle = cssTitle.join(';');
+            let aligmentsss = cssAvatar.join(';');
             return {
                 tag: element.settings?.tag ? element.settings.tag : 'p',
-                link:element.settings?.link ? element.settings.link : null,
+                link: element.settings?.link ? element.settings.link : null,
                 content: element.settings?.content ? element.settings.content : element.desc,
                 styles: font,
                 colorTitle: fontTitle,
                 aligmentsss: aligmentsss,
-                cssBorder:cssBorder
-                }
+                cssBorder: cssBorder
+            };
         }
     },
     methods: {
-         check() {
+        check() {
             console.log('check', this.setCss, this.element);
         }
     }

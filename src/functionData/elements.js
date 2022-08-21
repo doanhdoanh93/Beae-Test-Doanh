@@ -4,7 +4,7 @@ const  elements= [
     {
         id: 'heading',
         label: 'Heading',
-        desc: 'Create a blocked text',
+        desc: 'Create a heading',
         icon: 'AcademicCapIcon',
         settings: {
             content: 'Enter your heading text',
@@ -14,6 +14,14 @@ const  elements= [
             frontStyle: 'normal',
             color: 'black',
             align: 'left',
+            typography:{
+                font_size: null,
+                font_weight:null,
+                letter_spacing:null,
+                line_height:null,
+                text_decoration:null,
+                text_transform:null
+            }
         },
         component: 'elementHeading',
         component_setting: 'settingHeading'
