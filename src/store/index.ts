@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+import { v4 as uuidv4 } from 'uuid';
 
 const modules = import.meta.globEager('./modules/*.ts');
 const stores: any = {};
@@ -17,12 +18,14 @@ export default createStore({
     state: {
         builders: [],
         selected: null,
-        isElement: null
+        isElement: null,
+        collapse:null
     },
     getters: {
         builders: (state) => state.builders,
         getSelected: (state) => state.selected,
-        isElement: (state) => state.isElement
+        isElement: (state) => state.isElement,
+        collapse: (state) => state.collapse
     },
 
     mutations: {
@@ -32,12 +35,27 @@ export default createStore({
             // console.log('state.selected: ', state.selected);
         },
         add: (state, item) => {
-            state.builders.push(item);
+            const newItem = {
+                ...item,
+                id: uuidv4()
+            };
+            console.log('newItem: ', newItem);
+            state.builders.push(newItem);
             console.log('state.builders: ', state.builders);
         },
-        deleteEL: (state, item) => (state.builders = state.builders.filter((el) => el !== item)),
+        deleteEL: (state, item) =>{
+            state.builders=state.builders.filter((el) => el !== item)
+        } ,
         openSetting: (state, item) => {
             state.selected = item;
+        },
+        setCollapse:(state, item) => {
+            if (state.collapse && state.collapse === item.id) {
+                state.collapse = null;
+                return;
+            }
+            state.collapse = item.id;
+            console.log('state.collapse: ', state.collapse);
         }
     },
 
@@ -47,6 +65,7 @@ export default createStore({
         deleteEL: ({ commit }, item) => commit('deleteEL', item),
         checkElements: ({ commit }, el) => {
             commit('checkElement', el);
-        }
+        },
+        setCollapse: ({ commit }, item) => commit('setCollapse', item),
     }
 });

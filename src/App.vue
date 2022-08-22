@@ -83,6 +83,7 @@ import elementFeatured from './components/featured/elementFeatured.vue';
 import settingFeatured from './components/featured/settingFeatured.vue';
 import elementTestimonial from './components/testimonial/elementTestimonial.vue';
 import settingTestimonial from './components/testimonial/settingTestimonial.vue';
+import settingCardTestimonial from './components/testimonial/settingCardTestimonial.vue';
 export default {
     components: {
         AcademicCapIcon,
@@ -96,7 +97,8 @@ export default {
         settingFeatured,
         elementFeatured,
         elementTestimonial,
-        settingTestimonial
+        settingTestimonial,
+        settingCardTestimonial
     },
     data() {
         return {
@@ -119,10 +121,8 @@ export default {
             ev.preventDefault();
         },
         drop(ev) {
-            this.$store.dispatch('checkElements', this.datadrag);
-            this.$store.dispatch('add', this.datadrag);
-            // console.log('this.datadrag: ', this.datadrag);
-            // console.log('this.getSelected: ', this.getSelected);
+            this.$store.dispatch('add',  JSON.parse(JSON.stringify(this.datadrag)));
+            this.$store.dispatch('checkElements', JSON.parse(JSON.stringify(this.datadrag)));
             ev.preventDefault();
         },
         openSetting(el) {

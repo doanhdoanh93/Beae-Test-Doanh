@@ -249,22 +249,18 @@ export default {
             isContent: true,
             isDesign: false,
             activeTab: 'content',
-            collapse: null
+            // collapse: null
         };
     },
     computed: {
-        ...mapGetters(['getSelected'])
+        ...mapGetters(['getSelected','collapse'])
     },
     methods: {
         check() {
             console.log(this.getSelected);
         },
         toggleCollapse(item) {
-            if (this.collapse && this.collapse === item.id) {
-                this.collapse = null;
-                return;
-            }
-            this.collapse = item.id;
+            this.$store.dispatch('setCollapse',item)
         },
         deleteItem(item) {
             this.getSelected.items = this.getSelected.items.filter((el) => el !== item);

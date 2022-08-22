@@ -80,9 +80,6 @@
                         {{ getSelected.settings.tag }}</span
                     >
                 </div>
-                <div>
-                    <ckeditor />
-                </div>
             </div>
             <div v-else>
                 <div class="mb-3">
@@ -229,8 +226,6 @@ export default {
         return {
             getAlignments: alignments,
             titleTag: titleTag,
-            isContent: true,
-            isDesign: false,
             activeTab: 'content',
             isAlignment: false,
             isTypography: false,

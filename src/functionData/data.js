@@ -37,7 +37,8 @@ const titleTag = [
     { tag: 'H5' },
     { tag: 'H6' },
     { tag: 'Strong' },
-    { tag: 'Span' }
+    { tag: 'Span' },
+    { tag: 'Div' }
 ];
 const fontSize = [
     '12px',
