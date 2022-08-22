@@ -29,7 +29,7 @@
                 >
                     {{ element.settings.btnText }}
                 </a>
-                <button class="bg-green-500 hover:bg-green-700" v-else>
+                <button class="bg-green-500 hover:bg-green-700 text-white" v-else>
                     {{ element.settings.btnText }}
                 </button>
             </div>

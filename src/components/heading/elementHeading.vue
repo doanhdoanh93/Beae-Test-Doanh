@@ -1,8 +1,7 @@
 <template>
     <div v-if="element">
-        <!-- <button @click="check()"> check data </button> -->
+        <button @click="check()"> check data </button>
         <component
-            v-if="element"
             :is="setCss.tag"
             :style="setCss.styles"
             class="pl-5 pr-5 pt-2 pb-2 text-left mb-3"
@@ -65,7 +64,7 @@ export default {
                 }
                 if (styles.typography.text_decoration) {
                     css.push(`text-decoration: ${styles.typography.text_decoration}`);
-                }
+                } 
                 if (styles.typography.text_transform) {
                     css.push(`text-transform: ${styles.typography.text_transform}`);
                 }
@@ -82,7 +81,7 @@ export default {
     },
     methods: {
         check() {
-            console.log('check', this.setCss, this.element);
+            console.log('check', this.element);
         }
     }
 };

@@ -1,11 +1,21 @@
 <template>
     <div class="elementTestimonial pl-5 p-5 pt-2 pb-2 mb-3" v-if="element">
-        <!-- <button @click="check()"> check data </button>  -->
+        <!-- <button @click="check()">check data</button> -->
         <div class="grid grid-cols-3 gap-8" :style="setCss.aligmentsss">
             <div v-for="(item, i) in items" :key="i" :style="setCss.cssBorder">
-                <div class="mb-3" :style="setCss.styles">
+                <component
+                    :is="item.title_tag || 'div'"
+                    class="mb-3"
+                    :style="setCss.styles"
+                    :class="`${
+                        getSelected && getSelected.id == item.id && item.tag == 'content'
+                            ? 'active'
+                            : ''
+                    }`"
+                    @click.stop="setCard(item, 'content')"
+                >
                     {{ item.content }}
-                </div>
+                </component>
 
                 <div class="flex">
                     <div class="flex-shrink-0">
@@ -15,9 +25,18 @@
                         </div>
                     </div>
                     <div class="flex-grow ml-3 text-left">
-                        <div :style="setCss.colorTitle">
+                        <component
+                            :is="item.title_tag || 'div'"
+                            :style="setCssTitle(item)"
+                            :class="`${
+                                getSelected && getSelected.id == item.id && item.tag == 'title'
+                                    ? 'active'
+                                    : ''
+                            }`"
+                            @click.stop="setCard(item, 'title')"
+                        >
                             {{ item.title }}
-                        </div>
+                        </component>
                         <div>{{ item.position }}</div>
                     </div>
                 </div>
@@ -36,19 +55,22 @@ export default {
             default: () => {}
         }
     },
-
+    data() {
+        return {};
+    },
     computed: {
-        ...mapGetters(['getSelected']),
+        ...mapGetters(['getSelected', 'collapse']),
         items() {
             return this.element.items;
         },
         setCss() {
             const element = this.element;
+            // console.log('this.element: ', this.element);
             const styles = this.element.styles;
             // console.log('fontStyle: ', styles);
 
             let css = [];
-            let cssTitle = [];
+            let colorContent = [];
             let cssAvatar = [];
             if (styles) {
                 switch (styles.frontStyle) {
@@ -69,7 +91,7 @@ export default {
                 cssAvatar.push(`text-align: ${styles.align}`);
             }
             if (styles.color) {
-                cssTitle.push(`color: ${styles.color}`);
+                css.push(`color: ${styles.color}`);
             }
             // console.log('object',css);
             const styleBorder = [];
@@ -81,14 +103,12 @@ export default {
             styles.border_radius && styleBorder.push(`border-radius: ${styles.border_radius}`);
             let cssBorder = styleBorder.join(';');
             let font = css.join(';');
-            let fontTitle = cssTitle.join(';');
             let aligmentsss = cssAvatar.join(';');
             return {
                 tag: element.settings?.tag ? element.settings.tag : 'p',
                 link: element.settings?.link ? element.settings.link : null,
                 content: element.settings?.content ? element.settings.content : element.desc,
                 styles: font,
-                colorTitle: fontTitle,
                 aligmentsss: aligmentsss,
                 cssBorder: cssBorder
             };
@@ -96,8 +116,36 @@ export default {
     },
     methods: {
         check() {
-            console.log('check', this.setCss, this.element);
+            console.log('check', this.items);
+        },
+        toggleCollapse(item) {
+            this.$store.dispatch('setCollapse', item);
+        },
+        setCard(item, tag) {
+            item.parentId = this.element.id;
+            item.tag = tag;
+            this.$store.dispatch('openSetting', item);
+        },
+        setCssTitle(item) {
+            const styles = item.styles;
+            // console.log('styles: ', styles);
+            let cssTitle = [];
+            if (styles?.align) {
+                cssTitle.push(`text-align: ${styles.align}`);
+            }
+            if (styles?.color) {
+                cssTitle.push(`color: ${styles.color}`);
+            }
+            let fontTitle = cssTitle.join(';');
+            if (fontTitle) console.log('fontTitle: ', fontTitle);
+            return fontTitle;
         }
     }
 };
 </script>
+<style scoped>
+.active {
+    border: 1px dashed;
+    border-color: red;
+}
+</style>

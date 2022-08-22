@@ -1,6 +1,6 @@
-import { avatars } from "./data";
+import { avatars } from './data';
 
-const  elements= [
+const elements = [
     {
         id: 'heading',
         label: 'Heading',
@@ -14,13 +14,13 @@ const  elements= [
             frontStyle: 'normal',
             color: 'black',
             align: 'left',
-            typography:{
+            typography: {
                 font_size: null,
-                font_weight:null,
-                letter_spacing:null,
-                line_height:null,
-                text_decoration:null,
-                text_transform:null
+                font_weight: null,
+                letter_spacing: null,
+                line_height: null,
+                text_decoration: null,
+                text_transform: null
             }
         },
         component: 'elementHeading',
@@ -57,16 +57,16 @@ const  elements= [
         desc: 'Create a testimonial',
         icon: 'AnnotationIcon',
         settings: {
-            fields: ["avatar", "title", "position", "content"],
-          },
-          items: CardItems(),
-          styles: {
+            fields: ['avatar', 'title', 'position', 'content']
+        },
+        items: CardItems(),
+        styles: {
             frontStyle: 'normal',
-            color: "black",
+            color: 'black',
             property: null,
-            align: "left",
-            bgColor: "#ffffff",
-          },
+            align: 'left',
+            bgColor: '#ffffff'
+        },
         component: 'elementTestimonial',
         component_setting: 'settingTestimonial'
     },
@@ -80,40 +80,76 @@ const  elements= [
         label: 'Product',
         icon: 'ViewGridAddIcon'
     }
-]
+];
 function CardItems() {
     return [
-      {
-        id: 1,
-        component_setting: "SimpleTextSetting",
-        avatar: avatars[1],
-        title: "John Doe 1",
-        position: "CEO",
-        child_styles: {},
-        content:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-      },
-      {
-        id: 2,
-        component_setting: "SimpleTextSetting",
-        avatar: avatars[2],
-        title: "John Doe 2",
-        position: "CEO",
-        child_styles: {},
-        content:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-      },
-      {
-        id: 3,
-        component_setting: "SimpleTextSetting",
-        avatar: null,
-        title: "John Doe 3",
-        position: "CEO",
-        child_styles: {},
-        content:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-      },
+        {
+            id: 1,
+            component_setting: 'settingCardTestimonial',
+            avatar: avatars[1],
+            title: 'John Doe 1',
+            position: 'CEO',
+            styles: {
+                frontStyle: 'normal',
+                color: 'black',
+                align: 'left',
+                typography: {
+                    font_size: null,
+                    font_weight: null,
+                    letter_spacing: null,
+                    line_height: null,
+                    text_decoration: null,
+                    text_transform: null
+                }
+            },
+            content:
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
+        },
+        {
+            id: 2,
+            component_setting: 'settingCardTestimonial',
+            avatar: avatars[2],
+            title: 'John Doe 2',
+            position: 'CEO',
+            styles: {
+                frontStyle: 'normal',
+                color: 'black',
+                align: 'left',
+                typography: {
+                    font_size: null,
+                    font_weight: null,
+                    letter_spacing: null,
+                    line_height: null,
+                    text_decoration: null,
+                    text_transform: null
+                }
+            },
+            content:
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
+        },
+        {
+            id: 3,
+            component_setting: 'settingCardTestimonial',
+            avatar: null,
+            title: 'John Doe 3',
+            position: 'CEO',
+            styles: {
+                frontStyle: 'normal',
+                color: 'black',
+                align: 'left',
+                typography: {
+                    font_size: null,
+                    font_weight: null,
+                    letter_spacing: null,
+                    line_height: null,
+                    text_decoration: null,
+                    text_transform: null
+                }
+            },
+            content:
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
+        }
     ];
-  }
+}
 
-  export default elements;
+export default elements;
