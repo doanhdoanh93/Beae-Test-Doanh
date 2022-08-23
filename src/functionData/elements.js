@@ -65,7 +65,9 @@ const elements = [
             color: 'black',
             property: null,
             align: 'left',
-            bgColor: '#ffffff'
+            bgColor: '#ffffff',
+            content_tag:null,
+            title_tag:null,
         },
         component: 'elementTestimonial',
         component_setting: 'settingTestimonial'
@@ -93,6 +95,7 @@ function CardItems() {
                 frontStyle: 'normal',
                 color: 'black',
                 align: 'left',
+                tag:'div',
                 typography: {
                     font_size: null,
                     font_weight: null,
@@ -113,8 +116,8 @@ function CardItems() {
             position: 'CEO',
             styles: {
                 frontStyle: 'normal',
-                color: 'black',
-                align: 'left',
+                title_color: 'black',
+                title_align : 'left',
                 typography: {
                     font_size: null,
                     font_weight: null,

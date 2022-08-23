@@ -114,15 +114,14 @@ export default {
     methods: {
         ...mapActions(['add']),
         checkTitle(el, ev) {
-            // console.log('ev: ', ev, el);
-            this.datadrag = el;
+            this.datadrag = JSON.parse(JSON.stringify(el))
         },
         allowDrop(ev) {
             ev.preventDefault();
         },
         drop(ev) {
-            this.$store.dispatch('add',  JSON.parse(JSON.stringify(this.datadrag)));
-            this.$store.dispatch('checkElements', JSON.parse(JSON.stringify(this.datadrag)));
+             this.$store.dispatch('checkElements',  this.datadrag);
+             this.$store.dispatch('add',  this.datadrag);
             ev.preventDefault();
         },
         openSetting(el) {

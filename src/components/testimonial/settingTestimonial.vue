@@ -94,20 +94,6 @@
                                     />
                                 </div>
                                 <div class="mb-2">
-                                    <div class="w-full p-1 cursor-pointer">
-                                        <TranslateIcon class="h-5 w-5 inline-block" /> Font style
-                                    </div>
-                                    <select
-                                        class="block w-full border border-gray-500 rounded-md p-2"
-                                        v-model="getSelected.styles.frontStyle"
-                                    >
-                                        <option value="normal">Normal</option>
-                                        <option value="italic">Italic</option>
-                                        <option value="bold">Bold</option>
-                                        <option value="line-through">Line through</option>
-                                    </select>
-                                </div>
-                                <div class="mb-2">
                                     <label for="content" class="text-sm">Text</label>
                                     <textarea
                                         type="text"
@@ -150,7 +136,20 @@
                         </option>
                     </select>
                 </div>
-
+                <div class="mb-3">
+                    <div class="w-full p-1 cursor-pointer">
+                        <TranslateIcon class="h-5 w-5 inline-block" /> Font style
+                    </div>
+                    <select
+                        class="block w-full border border-gray-500 rounded-md p-2"
+                        v-model="getSelected.styles.frontStyle"
+                    >
+                        <option value="normal">Normal</option>
+                        <option value="italic">Italic</option>
+                        <option value="bold">Bold</option>
+                        <option value="line-through">Line through</option>
+                    </select>
+                </div>
                 <div class="mb-3">
                     <label for="boxShadow" class="ml-2">Text shadow</label>
                     <select
@@ -248,19 +247,19 @@ export default {
             avatars: avatars,
             isContent: true,
             isDesign: false,
-            activeTab: 'content',
+            activeTab: 'content'
             // collapse: null
         };
     },
     computed: {
-        ...mapGetters(['getSelected','collapse'])
+        ...mapGetters(['getSelected', 'collapse'])
     },
     methods: {
         check() {
-            console.log(this.getSelected);
+            console.log(this.getSelected.items);
         },
         toggleCollapse(item) {
-            this.$store.dispatch('setCollapse',item)
+            this.$store.dispatch('setCollapse', item);
         },
         deleteItem(item) {
             this.getSelected.items = this.getSelected.items.filter((el) => el !== item);
@@ -270,9 +269,12 @@ export default {
             const newID = uuidv4();
             this.getSelected.items.push({
                 id: newID,
-                component_setting: 'SimpleTextSetting',
+                component_setting: 'settingCardTestimonial',
                 avatar: null,
                 title: 'Name ' + newID,
+                styles:{
+                    content_align:null,
+                },
                 position: 'Position ' + newID,
                 content:
                     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. "

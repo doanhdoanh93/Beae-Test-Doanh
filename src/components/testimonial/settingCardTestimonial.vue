@@ -1,7 +1,6 @@
 <template>
     <div v-if="getSelected">
-        <button @click="check()">check data</button>
-
+        <!-- <button @click="check()">chesck data1</button> -->
         <div class="flex justify-between text-center mb-3">
             <div
                 class="w-full p-1 cursor-pointer"
@@ -28,19 +27,15 @@
         <div>
             <div v-if="activeTab == 'content'" class="pl-3 bg-white ...">
                 <div>
-                    <label class="float-left ...">Name</label>
-                    <input
-                        type="text"
-                        class="w-full rounded mb-2 ..."
-                        v-model="getSelected.title"
-                    />
+                    <label class="float-left ...">Text</label>
+                    <input type="text" class="w-full rounded mb-2 ..." v-model="getSelected[setTag]" />
                 </div>
                 <div class="flex justify-between ...">
                     <div>
                         <select
                             name="tag"
                             class="rounded appearance-none ..."
-                            v-model="getSelected.title_tag"
+                            v-model="getSelected[setTag + '_tag']"
                         >
                             <option v-for="(tag, i) in titleTag" :key="i" :value="tag.tag">
                                 {{ tag.tag }}
@@ -49,7 +44,7 @@
                         <span class="inline-block text-center ..."> Title tag</span>
                     </div>
                     <span class="inline-block text-center bg-green-100 ...">
-                        {{ getSelected.title_tag }}</span
+                        {{ getSelected[setTag + '_tag'] }}</span
                     >
                 </div>
             </div>
@@ -63,7 +58,7 @@
                     <div v-show="isAlignment" class="transition-all">
                         <select
                             class="block w-full border border-gray-500 rounded-md p-2"
-                            v-model="getSelected.styles.align"
+                            v-model="getSelected.styles[setTag + '_align']"
                         >
                             <option
                                 v-for="align in getAlignments"
@@ -77,7 +72,7 @@
                 </div>
                 <div class="mb-2">
                     <color-picker
-                        v-model:pureColor="getSelected.styles.color"
+                        v-model:pureColor="getSelected.styles[setTag + '_color']"
                         useType="pure"
                         disableHistory
                         shape="circle"
@@ -94,28 +89,31 @@
 import { mapGetters } from 'vuex';
 import { alignments, titleTag } from '../../functionData/data';
 
-import { PencilIcon, SunIcon, DotsVerticalIcon } from '@heroicons/vue/solid';
+import { PencilIcon, SunIcon, DotsVerticalIcon,ChevronDownIcon } from '@heroicons/vue/solid';
 export default {
     components: {
         PencilIcon,
         SunIcon,
-        DotsVerticalIcon
+        DotsVerticalIcon,ChevronDownIcon
     },
     data() {
         return {
             getAlignments: alignments,
             titleTag: titleTag,
             activeTab: 'content',
-            isAlignment: false
+            isAlignment: false,
         };
     },
     computed: {
-        ...mapGetters(['getSelected'])
+        ...mapGetters(['getSelected', 'builders']),
+        setTag(){
+            return this.getSelected.target;
+        }
     },
     methods: {
         check() {
-            console.log(this.getSelected);
-        }
+            console.log("bbb",this.getSelected);
+        },
     }
 };
 </script>

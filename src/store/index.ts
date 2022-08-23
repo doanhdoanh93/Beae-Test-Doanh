@@ -35,13 +35,10 @@ export default createStore({
             // console.log('state.selected: ', state.selected);
         },
         add: (state, item) => {
-            const newItem = {
-                ...item,
-                id: uuidv4()
-            };
-            console.log('newItem: ', newItem);
-            state.builders.push(newItem);
-            console.log('state.builders: ', state.builders);
+            item['id']=uuidv4()
+            // console.log('newItem: ', item);
+            state.builders.push(item);
+            // console.log('state.builders: ', state.builders);
         },
         deleteEL: (state, item) =>{
             state.builders=state.builders.filter((el) => el !== item)
