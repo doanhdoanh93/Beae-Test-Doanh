@@ -1,14 +1,14 @@
 <template>
     <div class="elementTestimonial pl-5 p-5 pt-2 pb-2 mb-3" v-if="element">
         <!-- <button @click="check()">check data</button> -->
-        <div class="grid grid-cols-3 gap-8" :style="setCss.aligmentsss">
+        <div class="grid grid-cols-3 gap-8" :style="setCss.font">
             <div v-for="(item, i) in items" :key="i" :style="setCss.cssBorder">
                 <component
-                    :is="item.title_tag || 'div'"
+                    :is="item.content_tag || 'div'"
                     class="mb-3"
-                    :style="setCss.styles"
+                    :style="setCssItem(item,'content')"
                     :class="`${
-                        getSelected && getSelected.id == item.id && item.tag == 'content'
+                        getSelected && getSelected.id == item.id && item.target == 'content'
                             ? 'active'
                             : ''
                     }`"
@@ -27,9 +27,9 @@
                     <div class="flex-grow ml-3 text-left">
                         <component
                             :is="item.title_tag || 'div'"
-                            :style="setCssTitle(item)"
+                            :style="setCssItem(item,'title')"
                             :class="`${
-                                getSelected && getSelected.id == item.id && item.tag == 'title'
+                                getSelected && getSelected.id == item.id && item.target == 'title'
                                     ? 'active'
                                     : ''
                             }`"
@@ -65,13 +65,8 @@ export default {
         },
         setCss() {
             const element = this.element;
-            // console.log('this.element: ', this.element);
             const styles = this.element.styles;
-            // console.log('fontStyle: ', styles);
-
             let css = [];
-            let colorContent = [];
-            let cssAvatar = [];
             if (styles) {
                 switch (styles.frontStyle) {
                     case 'italic':
@@ -88,12 +83,11 @@ export default {
                 }
             }
             if (styles.align) {
-                cssAvatar.push(`text-align: ${styles.align}`);
+                css.push(`text-align: ${styles.align}`);
             }
             if (styles.color) {
                 css.push(`color: ${styles.color}`);
             }
-            // console.log('object',css);
             const styleBorder = [];
             if (styles.border_width) {
                 styleBorder.push(`border: ${styles.border_width} solid`);
@@ -103,14 +97,13 @@ export default {
             styles.border_radius && styleBorder.push(`border-radius: ${styles.border_radius}`);
             let cssBorder = styleBorder.join(';');
             let font = css.join(';');
-            let aligmentsss = cssAvatar.join(';');
+
             return {
                 tag: element.settings?.tag ? element.settings.tag : 'p',
                 link: element.settings?.link ? element.settings.link : null,
                 content: element.settings?.content ? element.settings.content : element.desc,
-                styles: font,
-                aligmentsss: aligmentsss,
-                cssBorder: cssBorder
+                font: font,
+                cssBorder: cssBorder,
             };
         }
     },
@@ -122,24 +115,21 @@ export default {
             this.$store.dispatch('setCollapse', item);
         },
         setCard(item, tag) {
-            item.parentId = this.element.id;
-            item.tag = tag;
+            item.target = tag;
+            console.log('item: ', item);
             this.$store.dispatch('openSetting', item);
         },
-        setCssTitle(item) {
+        setCssItem(item,tag) {
             const styles = item.styles;
-            // console.log('styles: ', styles);
-            let cssTitle = [];
-            if (styles?.align) {
-                cssTitle.push(`text-align: ${styles.align}`);
+            let css = [];
+            if (styles[tag+'_align'] ) {
+                css.push(`text-align: ${styles[tag+'_align']}`);
             }
-            if (styles?.color) {
-                cssTitle.push(`color: ${styles.color}`);
+            if (styles[tag+'_color']) {
+                css.push(`color: ${styles[tag+'_color']}`);
             }
-            let fontTitle = cssTitle.join(';');
-            if (fontTitle) console.log('fontTitle: ', fontTitle);
-            return fontTitle;
-        }
+            return css.join(';');
+        },
     }
 };
 </script>
